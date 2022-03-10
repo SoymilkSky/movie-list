@@ -58,14 +58,19 @@ class App extends React.Component {
   }
 
   onAddMovieClick() {
-    //if (this.state.watchedList.length === 0) {
+    if (this.state.watchedList.length === 0) {
       this.setState({
         toWatchList: this.state.toWatchList.concat([{ title: this.state.newMovie, watched: false }]),
         oldList: this.state.oldList.concat([{ title: this.state.newMovie, watched: false }]),
         movieList: this.state.movieList.concat([{ title: this.state.newMovie, watched: false }])
       });
-    //}
+    } else {
+      this.setState({
+        toWatchList: this.state.toWatchList.concat([{ title: this.state.newMovie, watched: false }]),
+      });
+    }
   }
+
 
   onWatchedButtonClick(clickedMovie) {
     let tempMovieList = this.state.movieList;
@@ -85,110 +90,38 @@ class App extends React.Component {
       }
     });
 
-    this.setState({
-      movieList: tempMovieList,
-      toWatchList: tempMovieList,
-      watchedList: watchedList
-    });
+    if (this.state.toWatchState === true) {
+      this.setState({
+        toWatchList: tempMovieList,
+        watchedList: watchedList
+      });
+    } else if (this.state.watchedState === true) {
+      this.setState({
+        movieList: tempMovieList,
+        watchedList: watchedList
+      });
+    }
 
-    // clickedMovie.watched = true;
-    // if (this.state.watchedMoviesList.length === 0) {
-    //   this.setState({
-    //     watchedMoviesList: this.state.watchedMoviesList.concat([clickedMovie])
-    //   });
-    // }
-    // if (Object.keys(this.state.watchedMoviesList).filter((result, key) => {
-    //   if (this.state.watchedMoviesList[key].title === clickedMovie.title) {
-    //     result[key] = this.state.watchedMoviesList[key];
-    //   }
-    //   return result;
-    // }).length !== 1) {
-    //   this.setState({
-    //     watchedMoviesList: this.state.watchedMoviesList.concat([clickedMovie])
-    //   });
-    // } else {
-    //   return;
-    // }
   }
 
   onWatchedTabButtonClick() {
-
-    // if (this.state.watchedState === false) {
-    //   let watchedList = [];
-    //   this.state.toWatchList.forEach((movie) => {
-    //     if (movie.watched === true) {
-    //       watchedList.push(movie);
-    //     }
-    //   });
-
-    //   // set watchTab state to be true to indicate that we are currently on the watched list
-    //   // save the To Watch list in tabHolder
-    //   // swap out movie list with watched only list
-    //   // swap out tab holder to be to watch list
-
-    //   let tabContainer = this.state.movieList;
-
-    //   this.setState({
-    //     watchedState: true,
-    //     toWatchState: false,
-    //     movieList: watchedList,
-    //   });
-    // }
-
-    // if WatchedMovies has any movies in there
-    // if (this.state.watchedMoviesList.length !== 0 && this.state.toWatchState === true) {
-    //   this.setState({
-    //     watchedState: true,
-    //     toWatchState: false
-    //   })
-    //   this.reRender();
-    // }
+    if (this.state.watchedState === false) {
+      this.setState({
+        watchedState: true,
+        toWatchState: false,
+        movieList: this.state.watchedList
+      });
+    }
   }
 
   onToWatchTabButtonClick() {
-    console.log('onToWatchTabClick clicked!!');
-    // if (this.state.toWatchState === false) {
-    //   let toWatchList = [];
-    //   this.state.movieList.forEach((movie) => {
-    //     if (movie.watched === false) {
-    //       toWatchList.push(movie);
-    //     }
-    //   });
-
-    //   this.setState({
-    //     watchedState: false,
-    //     toWatchState: true,
-    //     movieList: toWatchList,
-    //   })
-    // }
-
-
-    // if (this.state.watchedState === true) {
-    //   this.setState({
-    //     toWatchState: false,
-    //     watchedState: true
-    //   })
-    //   this.reRender();
-    // }
-  }
-
-  reRender(movies) {
-
-
-    // if (this.state.toWatchState === false) {
-    //   let oldList = this.state.movieList;
-    //   this.setState({
-    //     movieList: this.state.watchedMoviesList,
-    //     oldList: oldList
-    //   });
-    // }
-
-    // if (this.state.tabState === true) {
-    //   let oldList = this.state.oldList;
-    //   this.setState({
-    //     movieList: oldList
-    //   })
-    // }
+    if (this.state.toWatchState === false) {
+      this.setState({
+        watchedState: false,
+        toWatchState: true,
+        movieList: this.state.toWatchList
+      });
+    }
   }
 
   render() {
